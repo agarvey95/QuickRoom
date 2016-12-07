@@ -1,16 +1,18 @@
-import java.awt.BorderLayout;
+package QR;
+
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import QR.Runner;
 
 public class HomeView extends JPanel
 {
@@ -39,19 +41,23 @@ public class HomeView extends JPanel
         
         button = new JButton("Submit");        
         panel.add(button); 
-        button.addActionListener(new SubmitButton());
-        
-        add(panel);
-        
-	}
-	
-	class SubmitButton implements ActionListener 
-	{
-        @Override
-        public void actionPerformed(ActionEvent submitClicked) 
+        ActionListener a = new ActionListener() 
         {
-        	String input = txtfield.getText();
-            System.out.println(input);          
-        }
-    }
+            public void actionPerformed(ActionEvent e) 
+            {
+            	String input = txtfield.getText(); //temp
+                System.out.println(input);  //temp
+                Runner.removeAll();
+                Runner.switchResults(input);
+        	
+             /*
+              * Anthony can u use the string from the textfield to search the databse(city)??
+              * and then prase those results into strings here and ill handle the rest.   
+              */
+                
+            }
+        };
+        button.addActionListener(a);
+        add(panel);    
+	}
 }
