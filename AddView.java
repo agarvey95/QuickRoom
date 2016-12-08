@@ -27,28 +27,27 @@ public class AddView extends JFrame {
 	private static String PASSWORD = "applepi1!";
 	
 	
+	private JPanel panel;
+	private JPanel panel1;
+	private JPanel panel2;
 	
-	JPanel panel;
-	JPanel panel1;
-	JPanel panel2;
-	
-	JLabel fname;
-	JLabel lname;
-	JLabel userName;
-	JLabel password;
-	JLabel creditcard;
-	
-	
-	JTextField f;
-	JTextField l;
-	JTextField u; 
-	JTextField p;
-	JTextField cc;
+	private JLabel fname;
+	private JLabel lname;
+	private JLabel userName;
+	private JLabel password;
+	private JLabel creditcard;
 	
 	
+	private JTextField f;
+	private JTextField l;
+	private JTextField u; 
+	private JTextField p;
+	private JTextField cc;
 	
-	JButton confirm;
-	JLabel title;
+	
+	
+	private JButton confirm;
+	private JLabel title;
 	
 	ActionListener i;
 	java.sql.Connection conn;
@@ -120,7 +119,7 @@ public class AddView extends JFrame {
 			String input3 = u.getText();
 			String input4 = p.getText();
 			String input5 = cc.getText();
-			
+			checkCreditCard();
 			try
 			{
 				conn = Connection.getConnection();
@@ -148,5 +147,11 @@ public class AddView extends JFrame {
 		
 	}
 	
-
+       public void checkCreditCard()
+	{
+		if(digits != 16 )
+		{
+			JOptionPane.showMessageDialog(null, "Invalid Credit Card Number");
+		}
+	}
 }
