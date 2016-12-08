@@ -22,10 +22,6 @@ import java.sql.*;
 @SuppressWarnings("serial")
 public class AddView extends JFrame {
 	
-	private static String url = "jdbc:mysql://localhost:3306/quickroom1?autoReconnect=true&useSSL=false ";
-	private static String 	USERNAME = "root";
-	private static String PASSWORD = "applepi1!";
-	
 	
 	private JPanel panel;
 	private JPanel panel1;
