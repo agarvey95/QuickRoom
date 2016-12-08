@@ -11,6 +11,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import net.proteanit.sql.DbUtils;
+import java.sql.*;
 
 import QR.Runner;
 
@@ -21,7 +23,10 @@ public class HomeView extends JPanel
     private JTextField txtfield;
     private JPanel panel;
 	private JLabel lblWelcomeToQuickroom;
-    
+    private static JTable table;
+
+	
+	java.sql.Connection conn = null;
 	public HomeView()
 	{
 		panel = new JPanel();
@@ -50,14 +55,39 @@ public class HomeView extends JPanel
                 Runner.removeAll();
                 Runner.switchResults(input);
         	
-             /*
-              * Anthony can u use the string from the textfield to search the databse(city)??
-              * and then prase those results into strings here and ill handle the rest.   
-              */
+             try
+                {
+                	conn = Connection.getConnection();
+                	String sql = "SELECT Room_name, City , Country  FROM room WHERE City = ? ";
+                	PreparedStatement ps = conn.prepareStatement(sql);
+                	
+                	ps.setString(1, input);
+                	
+                	ResultSet rs = ps.executeQuery();
+                	
+                	table.setModel(DbUtils.resultSetToTableModel(rs)); // Sets the result set into the created table 
+                	
+                	
+                
+                }
+                catch(SQLException ex)
+                {
+                	ex.printStackTrace();
+                }
                 
             }
         };
         button.addActionListener(a);
         add(panel);    
+	}
+	
+	public static void setTable(JTable table) //Setter fot the JTable
+	{
+		HomeView.table = table;
+	}
+	
+	public static JTable getTable() // Gets The Created Table
+	{
+		return table;
 	}
 }
