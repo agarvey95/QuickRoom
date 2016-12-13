@@ -50,6 +50,8 @@ public class MainView extends JFrame
          */
         
         Home = new JMenuItem("Home");
+	Register = new JMenuItem("Register");
+        Login = new JMenuItem("Login");
         Exit = new JMenuItem("Exit");
         
         MenuBar.add(Home);
