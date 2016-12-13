@@ -63,6 +63,65 @@ public class MainView extends JFrame
         });
         //edit later
         MenuBar.add(new JMenuItem("Login"));
+	
+	 MenuBar.add(Register); 
+        Register.addActionListener()
+        {
+        	public void actiionPerformed(ActionEvent e)
+        	{
+        		panel = new JPanel();
+        		panel.setPreferredSize(new Dimension(800,520));
+        		panel.setLayout(new BorderLayout());
+        		panel.setBackground(Color.RED);
+        		
+        		
+        		title = new JLabel("Please enter your information to add an account");
+        		title.setFont(new Font( "Times New Roman", Font.BOLD, 28));
+        		panel.add(title, BorderLayout.NORTH);
+        		
+        		panel1 = new JPanel( new GridLayout(6,2));
+        		fname = new JLabel("First Name:");
+        		f = new JTextField(20);
+        		
+        		
+        		lname = new JLabel("Last Name");
+        		l = new JTextField(20);
+        		
+        		userName = new JLabel("Username :");
+        		u = new JTextField(20);
+        		
+        		password = new JLabel("Password :");
+        		p = new JTextField(20);
+        		
+        		creditcard = new JLabel("Credit Card number :");
+        		cc = new JTextField(16);
+        		
+        		
+        		panel2 = new JPanel();
+        		confirm = new JButton("Confirm");
+        		confirm.addActionListener(i);
+        		panel2.add(confirm);
+        		
+        		
+        		
+        		panel1.add(fname);
+        		panel1.add(f);
+        		panel1.add(lname);
+        		panel1.add(l);
+        		panel1.add(userName);
+        		panel1.add(u);
+        		panel1.add(password);
+        		panel1.add(p);
+        		panel1.add(creditcard);
+        		panel1.add(cc);
+        		
+        		panel.add(panel1, BorderLayout.CENTER);
+        		panel.add(panel2, BorderLayout.SOUTH);
+        		
+			}
+			
+        	}
+        }
         
         
         MenuBar.add(Exit);
