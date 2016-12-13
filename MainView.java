@@ -1,30 +1,18 @@
 package QR;
 
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.ComponentOrientation;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.Box;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-
 public class MainView extends JFrame
 {	
 	private JPanel HomePanel;
 	private JMenuBar MenuBar;
 	
 	private JMenuItem Home;
-	private JMenuItem Register;
-	private JMenuItem login;
 	private JMenuItem Exit;
+	private JMenuItem Register;
+	private JMenuItem Login;
+	
+	ActionListener i;
+	
 	
 	public void createPanel()
 	{
@@ -52,7 +40,7 @@ public class MainView extends JFrame
          */
         
         Home = new JMenuItem("Home");
-	Register = new JMenuItem("Register");
+        Register = new JMenuItem("Register");
         Login = new JMenuItem("Login");
         Exit = new JMenuItem("Exit");
         
@@ -65,69 +53,41 @@ public class MainView extends JFrame
                 Runner.switchHome(); 
             }
         });
-       
-	
-	MenuBar.add(Register);
-	
-        Register.addActionListener()
+        
+       MenuBar.add(Login); 
+       Login.addActionListener(new ActionListener()
         {
-        	public void actiionPerformed(ActionEvent e)
+        	public void actionPerformed(ActionEvent e)
         	{
-        		panel = new JPanel();
-        		panel.setPreferredSize(new Dimension(800,520));
-        		panel.setLayout(new BorderLayout());
-        		panel.setBackground(Color.RED);
-        		
-        		
-        		title = new JLabel("Please enter your information to add an account");
-        		title.setFont(new Font( "Times New Roman", Font.BOLD, 28));
-        		panel.add(title, BorderLayout.NORTH);
-        		
-        		panel1 = new JPanel( new GridLayout(6,2));
-        		fname = new JLabel("First Name:");
-        		f = new JTextField(20);
-        		
-        		
-        		lname = new JLabel("Last Name");
-        		l = new JTextField(20);
-        		
-        		userName = new JLabel("Username :");
-        		u = new JTextField(20);
-        		
-        		password = new JLabel("Password :");
-        		p = new JTextField(20);
-        		
-        		creditcard = new JLabel("Credit Card number :");
-        		cc = new JTextField(16);
-        		
-        		
-        		panel2 = new JPanel();
-        		confirm = new JButton("Confirm");
-        		confirm.addActionListener(i);
-        		panel2.add(confirm);
-        		
-        		
-        		
-        		panel1.add(fname);
-        		panel1.add(f);
-        		panel1.add(lname);
-        		panel1.add(l);
-        		panel1.add(userName);
-        		panel1.add(u);
-        		panel1.add(password);
-        		panel1.add(p);
-        		panel1.add(creditcard);
-        		panel1.add(cc);
-        		
-        		panel.add(panel1, BorderLayout.CENTER);
-        		panel.add(panel2, BorderLayout.SOUTH);
-        		
-			}
-			
-        	}
-        }
+        		JTextField userName = new JTextField();
+        		JTextField passWord = new JPasswordField();
+        		Object [] message = {
+        		    "Username:", userName,
+        		    "Password:", passWord
+        		};
+
+        		int inputbox = JOptionPane.showConfirmDialog(null, message, "Login", JOptionPane.OK_CANCEL_OPTION);
+        		if (inputbox == JOptionPane.OK_OPTION) {
+        		    if (userName.getText().equals("h") && passWord.getText().equals("h")) {
+        		        System.out.println("Login Successful!");
+        		        //Enter code for user transfers to new GUI page.
+        		    } else {
+        		        System.out.println("Login Failed.");
+        		    }
+        		} else {
+        		    System.out.println("Login Cancelled.");      		
+        	}}});
         
-        
+       	MenuBar.add(Register); 
+       	Register.addActionListener(new ActionListener()
+        {
+        	public void actionPerformed(ActionEvent e)
+        	{
+        		//JTextField createUsername = new JTextField();
+        		//JTextField CreatePassword = new JPasswordField();
+        		//add methods to store into database.
+        	}});
+       	
         MenuBar.add(Exit);
         Exit.addActionListener(new ActionListener()
         {
@@ -140,4 +100,3 @@ public class MainView extends JFrame
         setJMenuBar(MenuBar);
 	}
 }
-
