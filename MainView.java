@@ -22,6 +22,8 @@ public class MainView extends JFrame
 	private JMenuBar MenuBar;
 	
 	private JMenuItem Home;
+	private JMenuItem Register;
+	private JMenuItem login;
 	private JMenuItem Exit;
 	
 	public void createPanel()
@@ -63,10 +65,10 @@ public class MainView extends JFrame
                 Runner.switchHome(); 
             }
         });
-        //edit later
-        MenuBar.add(new JMenuItem("Login"));
+       
 	
-	 MenuBar.add(Register); 
+	MenuBar.add(Register);
+	
         Register.addActionListener()
         {
         	public void actiionPerformed(ActionEvent e)
