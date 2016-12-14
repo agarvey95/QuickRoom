@@ -9,24 +9,35 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTable;
 import javax.swing.JTextField;
-import net.proteanit.sql.DbUtils;
+
+
+
 import java.sql.*;
 
-import QR.Runner;
+
+import qr.Runner;
 
 public class HomeView extends JPanel
 {
     private JLabel label;
     private JButton button;
+    private JButton LoginButton;
+    private JButton RegisterButton;
     private JTextField txtfield;
     private JPanel panel;
 	private JLabel lblWelcomeToQuickroom;
-    private static JTable table;
-
+	private static JTable table;
 	
-	java.sql.Connection conn = null;
+	private String url = "jdbc:mysql://localhost:3306/quickroom1?autoReconnect=true&useSSL=false";
+	private static String 	USERNAME = "root";
+	private static String PASSWORD = "applepi1!";
+	private static java.sql.Connection c = null;
+    
 	public HomeView()
 	{
 		panel = new JPanel();
@@ -37,57 +48,115 @@ public class HomeView extends JPanel
 		lblWelcomeToQuickroom.setFont(new Font("Times New Roman", Font.BOLD, 28));
 		panel.add(lblWelcomeToQuickroom);
         
-        label = new JLabel("Search for cities:");
-        panel.add(label);
         
         
-        txtfield = new JTextField(18);
-        panel.add(txtfield);
+        LoginButton = new JButton("Login");        
+        panel.add(LoginButton); 
+        LoginButton.addActionListener(new ActionListener()
+        {
+        	public void actionPerformed(ActionEvent e)
+        	{
+        		JTextField userName = new JTextField();
+        		JTextField passWord = new JPasswordField();
+        		Object [] message = {
+        		    "Username:", userName,
+        		    "Password:", passWord
+        		};
+
+        		int inputbox = JOptionPane.showConfirmDialog(null, message, "Login", JOptionPane.OK_CANCEL_OPTION);
+        		if (inputbox == JOptionPane.OK_OPTION) {
+        		    if (userName.getText().equals("h") && passWord.getText().equals("h")) {
+        		        System.out.println("Login Successful!");
+        		        //Enter code for user transfers to new GUI page.
+        		    } else {
+        		        System.out.println("Login Failed.");
+        		    }
+        		} else {
+        		    System.out.println("Login Cancelled.");      		
+        	}}});
         
-        button = new JButton("Submit");        
-        panel.add(button); 
+        RegisterButton = new JButton("Register");
+        panel.add(RegisterButton);
+        RegisterButton.addActionListener(new ActionListener()
+        {
+        	public void actionPerformed(ActionEvent e)
+        	{
+        		JPanel inputPanel = new JPanel();
+        		JTextField createFname = new JTextField();
+        		JTextField createLname = new JTextField();
+        		JTextField createUsername = new JTextField();
+        		JTextField createPassword = new JTextField();
+        		JTextField createCreditCard = new JTextField();
+        		Object [] entry = {
+            		    "First Name:", createFname,
+            		    "Last Name:", createLname,
+            		    "Create a username", createUsername,
+            		    "Please enter Credit Card\ninformation for future purposes: ", createCreditCard
+            		    
+            		};
+        		int inputbox = JOptionPane.showConfirmDialog(null, entry, "Login", JOptionPane.OK_CANCEL_OPTION);
+        		if (inputbox == JOptionPane.OK_OPTION) {
+        			
+        		}
+        		String input1 = createFname.getText();
+        		String input2 = createLname.getText();
+        		String input3 = createUsername.getText();
+        		String input4 = createPassword.getText();
+        		String input5 = createCreditCard.getText();
+        		
+        		inputPanel.add(createFname);
+        		inputPanel.add(createLname);
+        		inputPanel.add(createUsername);
+        		inputPanel.add(createPassword);
+        		inputPanel.add(createCreditCard);
+        		
+        		try
+        		{
+        			Connection conn = DriverManager.getConnection(url, USERNAME, PASSWORD);
+        			String sql = "INSERT INTO account (First_name, Last_name, User_name, Password, Credit_Card_Number) VALUES (?,?,?,?,?);";
+        			
+        			PreparedStatement ps = conn.prepareStatement(sql);
+        			ps.setString(1, input1);
+        			ps.setString(2, input2);
+        			ps.setString(3, input3);
+        			ps.setString(4, input4);
+        			ps.setString(5, input5);
+        			
+        			ps.executeUpdate();
+        			
+        			ps.close();
+        			conn.close();
+        			
+        		}
+        		catch(SQLException ex)
+        		{
+        			ex.printStackTrace();
+        		}
+        		
+        		//JOptionPane.showMessageDialog(get, message);
+        	}});
+        
         ActionListener a = new ActionListener() 
         {
             public void actionPerformed(ActionEvent e) 
             {
-            	String input = txtfield.getText(); //temp
-                System.out.println(input);  //temp
+            	String input = txtfield.getText();  
+            	
                 Runner.removeAll();
                 Runner.switchResults(input);
-        	
-             try
-                {
-                	conn = Connection.getConnection();
-                	String sql = "SELECT Room_name, City , Country  FROM room WHERE City = ? ";
-                	PreparedStatement ps = conn.prepareStatement(sql);
-                	
-                	ps.setString(1, input);
-                	
-                	ResultSet rs = ps.executeQuery();
-                	
-                	table.setModel(DbUtils.resultSetToTableModel(rs)); // Sets the result set into the created table 
-                	
-                	
+                Connect.getConnection();
                 
-                }
-                catch(SQLException ex)
-                {
-                	ex.printStackTrace();
-                }
+    }
+              
+               
                 
-            }
+            
         };
         button.addActionListener(a);
         add(panel);    
 	}
 	
-	public static void setTable(JTable table) //Setter fot the JTable
-	{
-		HomeView.table = table;
-	}
+
+
 	
-	public static JTable getTable() // Gets The Created Table
-	{
-		return table;
-	}
 }
